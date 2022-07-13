@@ -26,38 +26,7 @@ int main(int argc, char *argv[])
 	if (n_read == -1)
 		f_read_error(buffer, fd);
 	token = strtok(buffer, "\n\t\a\r ;:");
-	while (token != NULL)
-	{
-		if (ispush == 1)
-		{
-			push(&h, line, token);
-			ispush = 0;
-			token = strtok(NULL, "\n\t\a\r ;:");
-			line++;
-			continue;
-		}
-		else if (strcmp(token, "push") == 0)
-		{
-			ispush = 1;
-			token = strtok(NULL, "\n\t\a\r ;:");
-			continue;
-		}
-		else
-		{
-			if (get_op_func(token) != 0)
-			{
-				get_op_func(token)(&h, line);
-			}
-			else
-			{
-				free_dlist(&h);
-				printf("L%d: unknown instruction %s\n", line, token);
-				exit(EXIT_FAILURE);
-			}
-		}
-		line++;
-		token = strtok(NULL, "\n\t\a\r ;:");
-	}
+	loop(token, line, h, ispush);
 	free_dlist(&h);
 	free(buffer);
 	close(fd);

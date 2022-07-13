@@ -73,4 +73,7 @@ int f_read_error(char *buffer, int fd);
 int get_op_error(char *token, unsigned int line, stack_t **h);
 int malloc_error(void);
 
+/* inside-main.c */
+int loop(char *token, unsigned int line, stack_t *h, int ispush);
+
 #endif
