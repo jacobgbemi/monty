@@ -15,26 +15,16 @@ int main(int argc, char *argv[])
 	stack_t *h = NULL;
 
 	if (argc != 2)
-	{
-		printf("USAGE: monty file\n");
-		exit(EXIT_FAILURE);
-	}
+		usage_error();
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-	{
-		printf("Error: Can't open file %s\n", argv[1]);
-		exit(EXIT_FAILURE);
-	}
+		f_open_error(argv[1]);
 	buffer = malloc(sizeof(char) * 10000);
 	if (!buffer)
-		return (0);
+		malloc_error();
 	n_read = read(fd, buffer, 10000);
 	if (n_read == -1)
-	{
-		free(buffer);
-		close(fd);
-		exit(EXIT_FAILURE);
-	}
+		f_read_error(buffer, fd);
 	token = strtok(buffer, "\n\t\a\r ;:");
 	while (token != NULL)
 	{
@@ -68,7 +58,8 @@ int main(int argc, char *argv[])
 		line++;
 		token = strtok(NULL, "\n\t\a\r ;:");
 	}
-	free_dlist(&h); free(buffer);
+	free_dlist(&h);
+	free(buffer);
 	close(fd);
 	return (0);
 }

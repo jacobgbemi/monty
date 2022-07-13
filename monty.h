@@ -66,4 +66,11 @@ int add_end_node(stack_t **h, int n);
 void delete_end_node(stack_t **h);
 void free_dlist(stack_t **h);
 
+/* error prototypes */
+int usage_error(void);
+int f_open_error(char *filename);
+int f_read_error(char *buffer, int fd);
+int get_op_error(char *token, unsigned int line, stack_t **h);
+int malloc_error(void);
+
 #endif
