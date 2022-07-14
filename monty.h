@@ -57,25 +57,39 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/* push_opcodes */
 void f_push(stack_t **stack, unsigned int line_number);
+
+/* stack_opcodes2.c */
 void f_pall(stack_t **stack, unsigned int line_number);
 void f_pint(stack_t **stack, unsigned int line_number);
-int execute(char *content, stack_t **head, unsigned int counter, FILE *file);
-void free_stack(stack_t *head);
+void f_nop(stack_t **stack, unsigned int line_number);
 void f_pop(stack_t **stack, unsigned int line_number);
 void f_swap(stack_t **stack, unsigned int line_number);
+
+/* get_op_func.c */
+int execute(char *content, stack_t **stack, unsigned int counter, FILE *file);
+
+/* calculator.c && calculator2.c */
 void f_add(stack_t **stack, unsigned int line_number);
-void f_nop(stack_t **stack, unsigned int line_number);
 void f_sub(stack_t **stack, unsigned int line_number);
 void f_div(stack_t **stack, unsigned int line_number);
 void f_mul(stack_t **stack, unsigned int line_number);
 void f_mod(stack_t **stack, unsigned int line_number);
+
+/* stack_opcodes.c */
 void f_pchar(stack_t **stack, unsigned int line_number);
 void f_pstr(stack_t **stack, unsigned int line_number);
+void f_stack(stack_t **stack, unsigned int line_number);
+void f_queue(stack_t **stack, unsigned int line_number);
+
+/* stack_rotate.c */
 void f_rotl(stack_t **stack, unsigned int line_number);
 void f_rotr(stack_t **head, __attribute__((unused)) unsigned int counter);
+
+/* doubly_linkedlist.c */
 void addnode(stack_t **head, int n);
 void addqueue(stack_t **head, int n);
-void f_queue(stack_t **stack, unsigned int line_number);
-void f_stack(stack_t **stack, unsigned int line_number);
+void free_stack(stack_t *head);
+
 #endif
