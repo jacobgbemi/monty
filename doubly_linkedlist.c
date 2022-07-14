@@ -1,77 +1,76 @@
 #include "monty.h"
 /**
- * add_end_node - add node to front of doubly linked list
- * @h: pointer to head of list
- * @n: node data
- * Return: 0 if success, -1 if failed
- */
-int add_end_node(stack_t **h, int n)
+ * addnode - add node to the head stack
+ * @head: head of the stack
+ * @n: new_value
+ * Return: void
+*/
+void addnode(stack_t **head, int n)
 {
-	stack_t *new;
 
-	if (!h)
-		return (-1);
+	stack_t *new_node, *temp;
 
-	/* malloc and set new node data */
-	new = malloc(sizeof(struct stack_s));
-	if (!new)
-	{
-		printf("Error: malloc failed");
-		return (-1);
-	}
-	new->n = n;
-
-	/* account for empty linked list */
-	if (*h == NULL)
-	{
-		*h = new;
-		new->next = NULL;
-		new->prev = NULL;
-	}
-	else /* insert to front */
-	{
-		new->next = *h;
-		(*h)->prev = new;
-		*h = new;
-	}
-	return (0);
+	temp = *head;
+	new_node = malloc(sizeof(stack_t));
+	if (new_node == NULL)
+	{ printf("Error\n");
+		exit(0); }
+	if (temp)
+		temp->prev = new_node;
+	new_node->n = n;
+	new_node->next = *head;
+	new_node->prev = NULL;
+	*head = new_node;
 }
-/**
- * delete_end_node - deletes node at end of doubly linked list
- * @h: pointer to head of doubly linked list
- */
-void delete_end_node(stack_t **h)
-{
-	stack_t *del = NULL;
 
-	/* account for only one node in list */
-	del = *h;
-	if ((*h)->next == NULL)
+/**
+ * addqueue - add node to queue
+ * @n: new_value
+ * @head: head of the queue
+ * Return: void
+*/
+void addqueue(stack_t **head, int n)
+{
+	stack_t *new_node, *temp;
+
+	temp = *head;
+	new_node = malloc(sizeof(stack_t));
+	if (new_node == NULL)
 	{
-		*h = NULL;
-		free(del);
+		printf("Error\n");
 	}
-	else /* else delete front, and link correctly */
+	new_node->n = n;
+	new_node->next = NULL;
+	if (temp)
 	{
-		*h = (*h)->next;
-		(*h)->prev = NULL;
-		free(del);
+		while (temp->next)
+			temp = temp->next;
+	}
+	if (!temp)
+	{
+		*head = new_node;
+		new_node->prev = NULL;
+	}
+	else
+	{
+		temp->next = new_node;
+		new_node->prev = temp;
 	}
 }
-/**
- * free_dlist - frees a doubly linked list with only int data, no strings
- * @h: pointer to head of list
- */
-void free_dlist(stack_t **h)
-{
-	/* return if empty list */
-	if (!h)
-		return;
 
-	while (*h && (*h)->next)
+/**
+ * free_stack - frees a doubly linked list
+ * @head: head of the stack
+*/
+void free_stack(stack_t *head)
+{
+	stack_t *temp;
+
+	temp = head;
+	while (head)
 	{
-		*h = (*h)->next;
-		free((*h)->prev);
+		temp = head->next;
+		free(head);
+		head = temp;
 	}
-	free(*h);
 }
